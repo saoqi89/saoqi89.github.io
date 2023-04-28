@@ -1,0 +1,649 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Saoqi89">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1.定义：Ensure a class has only one instance, and provide a global point of access to it.  (确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。) 2.优点： 由于单例模式在内存中只有一个实例，减少了内存开支，特别是一个对象需要频繁地创建、销毁时，而且创建或销毁时性能又无法优化，单例模式的优势就非常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Blok">
+<meta property="og:url" content="http://saoqi89.com/2023/04/28/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Blok">
+<meta property="og:description" content="1.定义：Ensure a class has only one instance, and provide a global point of access to it.  (确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。) 2.优点： 由于单例模式在内存中只有一个实例，减少了内存开支，特别是一个对象需要频繁地创建、销毁时，而且创建或销毁时性能又无法优化，单例模式的优势就非常">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\saoqi\Downloads\%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.png">
+<meta property="article:published_time" content="2023-04-28T04:26:22.948Z">
+<meta property="article:modified_time" content="2023-04-28T04:26:19.339Z">
+<meta property="article:author" content="Saoqi89">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:\Users\saoqi\Downloads\%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.png">
+  
+  
+  
+  <title>Blok</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"saoqi89.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Blok</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-28 12:26" pubdate>
+          2023年4月28日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h4 id="1-定义："><a href="#1-定义：" class="headerlink" title="1.定义："></a>1.定义：</h4><p>Ensure a class has only one instance, and provide a global point of access to it. </p>
+<p>(确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。)</p>
+<h4 id="2-优点："><a href="#2-优点：" class="headerlink" title="2.优点："></a>2.优点：</h4><ul>
+<li>由于单例模式在内存中只有一个实例，减少了内存开支，特别是一个对象需要频繁地创建、销毁时，而且创建或销毁时性能又无法优化，单例模式的优势就非常明显。</li>
+<li>由于单例模式只生成一个实例，所以减少了系统的性能开销，当一个对象的产生需要比较多的资源时，如读取配置、产生其他依赖对象时，则可以通过在应用启动时直接产生一个单例对象，然后用永驻留内存的方式来解决 </li>
+<li>单例模式可以避免对资源的多重占用，例如一个写文件动作，由于只有一个实例存在内存中，避免对同一个资源文件的同时写操作。</li>
+<li>单例模式可以在系统设置全局的访问点，优化和共享资源访问，例如可以设计一个单例类，负责所有数据表的映射处理。</li>
+</ul>
+<h4 id="3-饿汉模式："><a href="#3-饿汉模式：" class="headerlink" title="3.饿汉模式："></a>3.饿汉模式：</h4><p>在类加载的时候进行初始化，这样就得到了唯一的一个可用对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//饿汉模式</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">HungerPattern</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">HungerPattern</span>(<span class="hljs-type">const</span>	HungerPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>	HungerPattern&amp; <span class="hljs-keyword">operator</span>	= (<span class="hljs-type">const</span> HungerPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>	<span class="hljs-function"><span class="hljs-type">static</span> HungerPattern* <span class="hljs-title">GetInstance</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> m_HungerPattern;<br>	&#125;<br><br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-built_in">HungerPattern</span>() = <span class="hljs-keyword">default</span>;<br>	<span class="hljs-type">static</span> HungerPattern* m_HungerPattern;<br>&#125;;<br><br><span class="hljs-comment">//静态成员初始化放到类外部处理</span><br>HungerPattern* HungerPattern::m_HungerPattern = <span class="hljs-keyword">new</span> HungerPattern;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Hunger_test</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	HungerPattern* obj = HungerPattern::<span class="hljs-built_in">GetInstance</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-懒汉模式"><a href="#4-懒汉模式" class="headerlink" title="4.懒汉模式:"></a>4.懒汉模式:</h4><h5 id="4-1-类的定义"><a href="#4-1-类的定义" class="headerlink" title="4.1 类的定义"></a>4.1 类的定义</h5><p>在类加载的时候不去创建实例，而是在需要的时候进行实例化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//懒汉模式</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LazyPattern</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-built_in">LazyPattern</span>(<span class="hljs-type">const</span> LazyPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>	LazyPattern&amp; <span class="hljs-keyword">operator</span> = (<span class="hljs-type">const</span> LazyPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>	<span class="hljs-function"><span class="hljs-type">static</span> LazyPattern* <span class="hljs-title">GetInstance</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">if</span> (m_LazyPattern != <span class="hljs-literal">nullptr</span>)<br>		&#123;<br>			m_LazyPattern = <span class="hljs-keyword">new</span> LazyPattern;<br>		&#125;<br>		<span class="hljs-keyword">return</span> m_LazyPattern;<br>	&#125;<br><span class="hljs-keyword">private</span>:<br>	<span class="hljs-built_in">LazyPattern</span>() = <span class="hljs-keyword">default</span>;<br>	<span class="hljs-type">static</span> LazyPattern* m_LazyPattern;<br>&#125;;<br><br>LazyPattern* LazyPattern::m_LazyPattern = <span class="hljs-literal">nullptr</span>;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Lazy_test</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	LazyPattern* obj = LazyPattern::<span class="hljs-built_in">GetInstance</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-2-线程安全问题"><a href="#4-2-线程安全问题" class="headerlink" title="4.2 线程安全问题"></a>4.2 线程安全问题</h5><p>对于饿汉模式是没有线程安全问题的，在这种模式下访问单例对象的时候，这个对象已经被创建出来了。</p>
+<p>要解决懒汉模式的线程安全问题，最常用的解决方案就是使用互斥锁。</p>
+<h6 id="双重检查锁定"><a href="#双重检查锁定" class="headerlink" title="双重检查锁定"></a>双重检查锁定</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-keyword">namespace</span> DoubleCheck &#123;<br><br>	<span class="hljs-keyword">class</span> <span class="hljs-title class_">LazyPattern</span><br>	&#123;<br>	<span class="hljs-keyword">public</span>:<br>		<span class="hljs-built_in">LazyPattern</span>(<span class="hljs-type">const</span> LazyPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>		LazyPattern&amp; <span class="hljs-keyword">operator</span> = (<span class="hljs-type">const</span> LazyPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>		<span class="hljs-function"><span class="hljs-type">static</span> LazyPattern* <span class="hljs-title">GetInstance</span><span class="hljs-params">()</span></span><br><span class="hljs-function">		</span>&#123;<br>			<span class="hljs-keyword">if</span> (m_LazyPattern == <span class="hljs-literal">nullptr</span>)<br>			&#123;<br>				m_Mutex.<span class="hljs-built_in">lock</span>();<br>				<span class="hljs-keyword">if</span> (m_LazyPattern == <span class="hljs-literal">nullptr</span>)<br>				&#123;<br>					m_LazyPattern = <span class="hljs-keyword">new</span> LazyPattern;<br>				&#125;<br>				m_Mutex.<span class="hljs-built_in">unlock</span>();<br>			&#125;<br>			<span class="hljs-keyword">return</span> m_LazyPattern;<br>		&#125;<br>	<span class="hljs-keyword">private</span>:<br>		<span class="hljs-built_in">LazyPattern</span>() = <span class="hljs-keyword">default</span>;<br>		<span class="hljs-type">static</span> LazyPattern* m_LazyPattern;<br>		<span class="hljs-type">static</span> mutex m_Mutex;<br>	&#125;;<br><br>	LazyPattern* LazyPattern::m_LazyPattern = <span class="hljs-literal">nullptr</span>;<br>	mutex LazyPattern::m_Mutex;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Lazy_test</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		LazyPattern* obj = LazyPattern::<span class="hljs-built_in">GetInstance</span>();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="静态局部变量"><a href="#静态局部变量" class="headerlink" title="静态局部变量"></a>静态局部变量</h6><ul>
+<li>静态局部变量存储在全局数据区；</li>
+<li>生命周期为整个程序结束；</li>
+<li>静态局部变量的初始化与全局变量类似；</li>
+<li>如果不为显示初始化，那么C++将自动初始化为0；</li>
+<li>当变量未被初始化时，所有并发执行都应当等待该变量初始化完成。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-keyword">namespace</span> StaticLocalVariable &#123;<br><br>	<span class="hljs-keyword">class</span> <span class="hljs-title class_">LazyPattern</span><br>	&#123;<br>	<span class="hljs-keyword">public</span>:<br>		<span class="hljs-built_in">LazyPattern</span>(<span class="hljs-type">const</span> LazyPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>		LazyPattern&amp; <span class="hljs-keyword">operator</span> = (<span class="hljs-type">const</span> LazyPattern&amp; obj) = <span class="hljs-keyword">delete</span>;<br>		<span class="hljs-function"><span class="hljs-type">static</span> LazyPattern* <span class="hljs-title">GetInstance</span><span class="hljs-params">()</span></span><br><span class="hljs-function">		</span>&#123;<br>			<span class="hljs-type">static</span> LazyPattern m_LazyPattern;<br>			<span class="hljs-keyword">return</span> &amp;m_LazyPattern;<br>		&#125;<br>		<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Print</span><span class="hljs-params">()</span></span><br><span class="hljs-function">		</span>&#123;<br>			cout &lt;&lt; <span class="hljs-string">&quot;Hello World&quot;</span> &lt;&lt; endl;<br>		&#125;<br>	<span class="hljs-keyword">private</span>:<br>		<span class="hljs-built_in">LazyPattern</span>() = <span class="hljs-keyword">default</span>;<br>	&#125;;<br><br>	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">Lazy_test</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		LazyPattern* obj = LazyPattern::<span class="hljs-built_in">GetInstance</span>();<br>		obj-&gt;<span class="hljs-built_in">Print</span>();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs tex">懒汉模式的缺点是在创建实例对象的时候有安全问题，但这样可以减少内存的浪费（如果用不到就不去申请内存了）。<br>饿汉模式则相反，在我们不需要这个实例对象的时候，它已经被创建出来，占用了一块内存。<br>对于现在的计算机而言，内存容量都是足够大的，这个缺陷可以被无视。<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-UML图"><a href="#5-UML图" class="headerlink" title="5.UML图"></a>5.UML图</h4><p><img src="C:\Users\saoqi\Downloads\单例模式.png" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://saoqi89.com/2023/04/28/单例模式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Saoqi89</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/28/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-1/" title="单例模式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">单例模式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/15/Test-1/" title="Test">
+                        <span class="hidden-mobile">Test</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
