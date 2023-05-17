@@ -4,13 +4,25 @@
   
   
   <entry>
-    <title>Test</title>
-    <link href="/2023/04/15/Test-1/"/>
-    <url>/2023/04/15/Test-1/</url>
+    <title>渲染</title>
+    <link href="/posts/Render.html"/>
+    <url>/posts/Render.html</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="前向渲染和延迟渲染"><a href="#前向渲染和延迟渲染" class="headerlink" title="前向渲染和延迟渲染"></a>前向渲染和延迟渲染</h1><h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>在游戏开发中，渲染技术是一个非常重要的话题。而在现代游戏中，前向渲染和延迟渲染是两种非常常用的技术，它们各自有自己的特点和优势。本文将介绍前向渲染和延迟渲染的原理、优缺点以及应用场景。 </p><h2 id="2-前向渲染"><a href="#2-前向渲染" class="headerlink" title="2. 前向渲染"></a>2. 前向渲染</h2><p>前向渲染是最基础的渲染技术，它通过在每个像素上计算所有光源对该像素的影响来渲染场景。在每个像素上，先计算环境光照的影响，然后计算每个灯光的影响，最后加上镜面反射的贡献。这种渲染方式的好处是在处理透明度、深度、反射等方面非常方便，并且可以支持复杂的阴影计算和多个光源。然而由于每个像素都要进行光照计算，前向渲染的计算开销相对较高，而且会受到像素着色器并发执行的限制。因此，在需要渲染大量多光源或复杂场景的情况下，前向渲染通常需要牺牲一些画面质量或性能。 </p><h2 id="3-延迟渲染"><a href="#3-延迟渲染" class="headerlink" title="3. 延迟渲染"></a>3. 延迟渲染</h2><p>延迟渲染是近年来非常流行的渲染技术之一，它通过在屏幕空间中对所有像素进行几何体积和光照信息的缓存，并在后处理阶段使用这些缓存来渲染场景。这种渲染方式的好处在于它能够在光照计算上有很好的优化，多光源处理时只需要一次光照计算即可，可以有效地减少重复计算。同时，延迟渲染能够更好地支持Post-processing效果，并且能够提供大量的渲染数据，例如法线、深度、反射等信息，为后期的shader中的效果提供了良好的基础。 </p><p>然而，延迟渲染也有自己的缺点。因为它是在后处理阶段进行光照处理，所以它无法像前向渲染那样直接支持透明度，需要使用特殊的技术来处理。同时，对于一些较为复杂的场景，延迟渲染的开销也可能会很大。 </p><h2 id="4-前向渲染-vs-延迟渲染"><a href="#4-前向渲染-vs-延迟渲染" class="headerlink" title="4. 前向渲染 vs. 延迟渲染"></a>4. 前向渲染 vs. 延迟渲染</h2><p>前向渲染和延迟渲染各有自己的优缺点。在面对不同的场景和需求时，需要选择合适的渲染技术。 </p><p>前向渲染适用于需要渲染复杂场景、多光源、透明度等特殊效果的情况。同时，在高端硬件的支持下，前向渲染也可以提供比延迟渲染更好的画面效果和更流畅的游戏体验。 </p><p>延迟渲染适用于需要渲染大量的光源和物体的情况。同时，延迟渲染也能够为Post-processing效果提供更好的支持，并且可以提供充足的渲染数据，为shader的实现提供了基础。然而，对于那些具有较大复杂度的场景，延迟渲染的开销也可能会很高。 </p><h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5. 结论"></a>5. 结论</h2><p>前向渲染和延迟渲染各有自己的特点和优势。在实际的游戏开发中，需要根据具体的需求和场景来选择合适的渲染技术。如果需要渲染复杂场景、多光源、透明度等特殊效果，可以选择前向渲染。如果需要渲染大量的光源和物体，可以选择延迟渲染。</p>]]></content>
     
     
+    <categories>
+      
+      <category>UE4</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>渲染</tag>
+      
+    </tags>
     
   </entry>
   
@@ -18,8 +30,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="/2023/04/15/hello-world/"/>
-    <url>/2023/04/15/hello-world/</url>
+    <link href="/posts/1243066710.html"/>
+    <url>/posts/1243066710.html</url>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
